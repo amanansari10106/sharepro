@@ -1,0 +1,103 @@
+{% extends "fileshare/base.html" %}
+{% block style %}
+<style>
+    #allc {
+        width: 80%;
+        margin: auto;
+    }
+
+    .filec {
+        margin: auto;
+        width: fit-content;
+        background-color: #d0d0d0;
+        padding: 1rem;
+        border: 2px solid #c2c2c2;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .filec2 {
+        display: flex;
+    }
+
+    .filec h3 {
+        margin: 0rem 2rem;
+    }
+
+    .filec2 button {
+        width: 8rem;
+        height: 2rem;
+        border-radius: .4rem;
+        font-weight: 600;
+        background-color: #3535fb;
+        color: white;
+        
+    }
+    .filec2 button:hover{
+        cursor: pointer;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div id="top">
+    <div id="allc">
+        <br>
+        {% for f in files %}
+        <div class="filec">
+            <div class="filec2">
+                <h3>{{ f.name }}</h3>
+                <a href="{{ f.file.url }}" onclick="dbtnfn()" download><button class="downloadbtn" onclick="dbtnfn()">Download</button></a>
+                <button class="delebtn" onclick="delefile(this)">Delete</button>
+                <input type="text" class="fid" value="{{ f.f_id }}">
+            </div>
+        </div>
+        {% endfor  %}
+    </div>
+</div>
+{% endblock %}
+{% block java %}
+<script>
+    document.addEventListener('DOMContentLoaded',()=>{
+        function dbtnfn(){
+            alert("hello")
+        }
+    })
+
+    function delefile(e){
+        let a = e.parentElement;
+        let fid = a.queryselector('.fid').value;
+        url = "/b/delefile/"
+        fetch(url, {
+            method: 'POST',
+            body: JSON.stringify({
+                title: 'New Pirate Captain',
+                body: 'Arrrrrr-ent you excited?',
+                "fid":fid
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        }).then(function (response) {
+            let me = document.querySelector("#label1")
+            if (response.status == 200) {
+                container.classList.add("danim");
+                container.addEventListener("animationend",()=>{
+                    container.remove();
+                })
+                return response.json();
+            }
+            
+            return Promise.reject(response);
+        }).then(function (data) {
+            
+            // console.log(data);
+        }).catch(function (error) {
+            
+        });
+
+
+    }
+
+</script>
+{% endblock %}

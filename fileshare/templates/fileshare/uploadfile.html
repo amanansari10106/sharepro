@@ -1,0 +1,60 @@
+{% extends "fileshare/base.html" %}
+{% block style %}
+<style>
+#allc {
+        width: 80%;
+        margin: auto;
+    }
+
+    .filec {
+        margin: auto;
+        width: fit-content;
+        background-color: #d0d0d0;
+        padding: 1rem;
+        border: 2px solid #c2c2c2;
+        border-radius: 0.5rem;
+    }
+
+    .filec2 {
+        display: flex;
+    }
+
+    .filec h3 {
+        margin: 0rem 2rem;
+    }
+
+    .filec button {
+        width: 8rem;
+        height: 2rem;
+        border-radius: .4rem;
+        font-weight: 600;
+        background-color: #3535fb;
+        color: white;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div id="top">
+    <div id="allc">
+        <br>
+        <div class="filec">
+            <h2>Uload File</h2>
+            <!-- <div class="filec2">
+                <input type="text" placeholder="hello">
+                
+            </div> -->
+            <form method = "post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Upload</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block java %}
+{% endblock %}
